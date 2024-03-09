@@ -10,11 +10,12 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
 
     $nombre = $post_data['nombre'];
     $email = $post_data['email'];
+    $edad = $post_data['edad'];
 
     // $nombre = $_POST["nombre"];
     // $email = $_POST["email"];
 
-    $query = "INSERT INTO usuarios (nombre, email) VALUES ('$nombre', '$email')";
+    $query = "INSERT INTO usuarios (nombre, email, edad) VALUES ('$nombre', '$email', '$edad')";
     $result = mysqli_query($conn, $query);
 
     if($result) {
