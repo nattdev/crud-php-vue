@@ -1,11 +1,18 @@
 <script setup>
+import { ref, provide} from 'vue';
 import { RouterView } from 'vue-router';
 
-import { useRoute, useRouter } from 'vue-router'
+const users = ref([]);
+provide('users', {users, getUsers});
 
-const location = useRoute();
-const router = useRouter();
+async function getUsers() {
+    const URL = "http://localhost/crud-php-vue/api/read.php";
+    const response = await fetch(URL);
+    const data = await response.json();
+    users.value = data;
+}
 
+getUsers();
 </script>
 
 <template>
@@ -16,7 +23,7 @@ const router = useRouter();
     <router-link to="/users">Ver Usuarios</router-link><br>
     <p>
       <strong>Current route path:</strong> {{ $route.fullPath }}
-      <strong>Current route path:</strong> {{ $route.params.id }}
+      <strong>Current params route path:</strong> {{ $route.params.id }}
     </p>
   </div>
   <main>
