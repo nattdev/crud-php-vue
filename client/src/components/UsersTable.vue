@@ -1,20 +1,14 @@
 <script setup>
-import { ref } from 'vue';
-const users = ref([]);
+import { ref, inject } from 'vue';
 
-async function getUsers() {
-    const URL = "http://localhost/crud-php-vue/api/read.php";
-    const response = await fetch(URL);
-    const data = await response.json();
-    users.value = data;
-}
-
-getUsers();
+// const users = ref([]);
+const {users} = inject('users');
 
 async function deleteUser(id) {
     console.log("eliminar", id);
+    const newUsers = users.value.filter(user => id !== user.id);
+    users.value = newUsers;
     const URL = "http://localhost/crud-php-vue/api/delete.php";
-
     const data = {
         id: parseInt(id),
     }
@@ -27,7 +21,6 @@ async function deleteUser(id) {
         },
     });
 }
-
 
 </script>
 
