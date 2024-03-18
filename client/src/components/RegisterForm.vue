@@ -1,6 +1,9 @@
 <script setup>
 
-import { ref } from 'vue';
+import { inject, ref } from 'vue';
+
+const {getUsers} = inject('users');
+console.log(getUsers);
 
 const name = ref("");
 const age = ref();
@@ -25,6 +28,8 @@ async function createUser() {
     name.value = "";
     age.value = "";
     email.value = "";
+
+    getUsers();
 }
 
 
