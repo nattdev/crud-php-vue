@@ -35,7 +35,7 @@ function pathName() {
     <div class="flex items-center">
       <h1 class="text-2xl font-semibold mr-4 min-w-56">{{pathName()}}</h1>
       <nav class="flex flex-row p-4 gap-6 text-stone-500">
-        <router-link to="/">Home</router-link>
+        <router-link to="/">Inicio</router-link>
         <router-link to="/register">Registrar Usuario</router-link>
         <router-link to="/users">Ver Usuarios</router-link>
       </nav>
