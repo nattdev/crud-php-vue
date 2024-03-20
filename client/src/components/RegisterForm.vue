@@ -1,6 +1,6 @@
 <script setup>
-
 import { inject, ref } from 'vue';
+import { useRoute } from 'vue-router';
 
 const {getUsers} = inject('users');
 console.log(getUsers);
@@ -32,9 +32,17 @@ async function createUser() {
     getUsers();
 }
 
+const route = useRoute();
+
+if(route.params.id) {
+    console.log("update");
+}
 
 </script>
 <template>
+
+    <h2>{{ $route.params.id ? "Update User" : "Create User"}}</h2>
+
     <form @submit.prevent="createUser">
         <label for="GET-name">Nombre:</label>
         <input id="GET-name" v-model="name" type="text" name="name" required/>
