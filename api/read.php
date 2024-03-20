@@ -5,9 +5,15 @@ $conn = mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-$uri = explode( '/', $uri );
+$uri = explode('/', $uri);
 
-$id = $uri[4];
+$uriSize = count($uri);
+
+$id = null;
+
+if ($uriSize >= 5) {
+    $id = $uri[4];
+}
 
 if ($id) {
     $query = "SELECT * FROM usuarios where id = $id";
