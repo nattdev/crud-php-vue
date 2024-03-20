@@ -1,8 +1,9 @@
 <script setup>
+import router from '@/router';
 import { ref, inject } from 'vue';
 
 // const users = ref([]);
-const {users} = inject('users');
+const { users } = inject('users');
 
 async function deleteUser(id) {
     console.log("eliminar", id);
@@ -22,6 +23,10 @@ async function deleteUser(id) {
     });
 }
 
+function navigateToUpdateUser(id) {
+    router.push(`/users/${id}`)
+}
+
 </script>
 
 <template>
@@ -31,6 +36,6 @@ async function deleteUser(id) {
         <p>Edad: {{ user.edad }}</p>
         <p>Email: {{ user.email }}</p>
         <button @click="deleteUser(user.id)">DELETE</button>
-        <button>UPDATE</button>
+        <button @click="navigateToUpdateUser(user.id)">UPDATE</button>
     </div>
 </template>
