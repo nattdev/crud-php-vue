@@ -1,5 +1,5 @@
 <template>
-    <main class="text-lg py-3">
+    <div class="text-lg ">
         <p class="py-3"><span class="font-semibold">Bienvenido!</span> 👋 Esta es una aplicación web que te permite interactuar con los registros de los usuarios, puedes realizar tareas de:</p>
         <ul>
             <li>✔️ Crear Usuarios</li>
@@ -7,5 +7,5 @@
             <li>✔️ Listar usuarios</li>
             <li>✔️ Eliminar usuarios</li>
         </ul>
-    </main>
+    </div>
 </template>
