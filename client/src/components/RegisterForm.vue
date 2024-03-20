@@ -82,23 +82,20 @@ if (route.params.id) {
 
 </script>
 <template>
-
-    <h2>{{ $route.params.id ? "Update User" : "Create User" }}</h2>
-
-    <form @submit.prevent="submitForm">
-        <label for="GET-name">Nombre:</label>
-        <input id="GET-name" v-model="name" type="text" name="name" required />
-        <label for="GET-age" v-if="!$route.params.id">Edad:</label>
-        <input id="GET-age" v-model="age" type="number" name="age" v-if="!$route.params.id"/>
-        <label for="GET-email">Email:</label>
-        <input id="GET-email" v-model="email" type="email" name="email" required />
-        <input type="submit" value="Save" />
-    </form>
-
-    <div id="preview-card-user">
-        <p>Nombre de Usuario: {{ name }}</p>
-        <p>Edad: {{ age }}</p>
-        <p>Email: {{ email }}</p>
+    <div class="bg-[#FBFCFF] rounded-xl">
+        <form class="flex flex-col px-12 py-6 text-lg" @submit.prevent="submitForm">
+            <label class="font-semibold p-1" for="GET-name">Nombre</label>
+            <input class="p-1 border-b-slate-200 border-b-2" id="GET-name" v-model="name" type="text" name="name" required />
+            <label class="font-semibold p-1" for="GET-age" v-if="!$route.params.id">Edad</label>
+            <input class="p-1 border-b-slate-200 border-b-2" id="GET-age" v-model="age" type="number" name="age" v-if="!$route.params.id" />
+            <label class="font-semibold p-1" for="GET-email">Email</label>
+            <input class="p-1 border-b-slate-200 border-b-2" id="GET-email" v-model="email" type="email" name="email" required />
+            <input class="py-1 px-6 mt-3 border-2 rounded-3xl w-fit cursor-pointer border-slate-600 text-slate-600 font-semibold text-base" type="submit" value="GUARDAR" />
+        </form>
+        <div id="preview-card-user" class="flex flex-col items-center">
+            <p>Nombre de Usuario: {{ name }}</p>
+            <p>Edad: {{ age }}</p>
+            <p>Email: {{ email }}</p>
+        </div>
     </div>
-
 </template>
