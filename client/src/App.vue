@@ -43,8 +43,8 @@ function pathName() {
     <main class="mt-6">
       <RouterView />
     </main>
-    <footer class="bg-slate-50">
-      <div class="dev-info flex font-light absolute bottom-0 flex-wrap">
+    <footer class="bg-slate-50 m-3">
+      <div class="dev-info flex font-light bottom-0 flex-wrap">
           <p class="w-full font-semibold">Dev info:</p>
           <p>Current route path: <span class="font-semibold pr-6">{{ $route.fullPath }} </span></p>
           <p>Current params route path: <span class="font-semibold">{{ $route.params.id }} </span></p>
