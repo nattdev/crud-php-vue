@@ -82,7 +82,7 @@ if (route.params.id) {
 
 </script>
 <template>
-    <div class="bg-[#FBFCFF] rounded-xl flex items-center flex-col px-12 md:flex-row">
+    <div class="bg-[#FBFCFF] rounded-xl flex items-center flex-col sm:px-12 py-6 md:flex-row">
         <form class="flex flex-col pr-9 py-6 text-lg flex-grow gap-2 w-full md:w-fit" @submit.prevent="submitForm">
             <label class="font-semibold p-1" for="GET-name">Nombre</label>
             <input class="p-1 border-b-slate-200 border-b-2" id="GET-name" v-model="name" type="text" name="name" required />
@@ -92,7 +92,7 @@ if (route.params.id) {
             <input class="p-1 border-b-slate-200 border-b-2" id="GET-email" v-model="email" type="email" name="email" required />
             <input class="py-1 px-6 mt-3 border-2 rounded-3xl w-fit cursor-pointer border-slate-600 text-slate-600 font-semibold text-base" type="submit" value="GUARDAR" />
         </form>
-        <div id="preview-card-user" class="flex overflow-hidden flex-col justify-center h-fit p-6 items-center gap-2 bg-white shadow-md rounded-xl md:w-2/5 w-full break-words text-center">
+        <div id="preview-card-user" class="flex overflow-hidden flex-col justify-center h-fit p-6 items-center gap-2 bg-white shadow-md rounded-xl md:w-2/5 w-full break-words text-center mb-4 sm:mb-0">
             <p class="font-semibold mb-2">Nuevo Usuario</p>
             <img class="min-w-16 min-h-5 rounded-full" src="../assets/avatar/avatar.svg"/>
             <p class="mt-3 min-h-6 max-w-full max-h-12 text-xl overflow-y-auto">{{ name }}</p>
