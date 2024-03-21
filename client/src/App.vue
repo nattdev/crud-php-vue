@@ -31,19 +31,19 @@ function pathName() {
 </script>
 
 <template>
-  <div class="p-5">
-    <div class="flex items-center">
-      <h1 class="text-2xl font-semibold mr-4 min-w-56">{{pathName()}}</h1>
-      <nav class="flex flex-row p-4 gap-6 text-stone-500">
+  <div class="p-5 min-h-screen flex flex-col">
+    <div class="flex items-start sm:items-center sm:flex-row flex-col px-3 sm:px-0">
+      <h1 class="text-2xl font-semibold mr-0 min-w-none sm:mr-4 sm:min-w-60">{{pathName()}}</h1>
+      <nav class="flex flex-col items-start sm:items-center sm:flex-row sm:p-4 py-4 sm:gap-6 gap-3 text-slate-500 ba font-normal">
         <router-link to="/">Inicio</router-link>
         <router-link to="/register">Registrar Usuario</router-link>
-        <router-link to="/users">Ver Usuarios</router-link>
+        <router-link to="/users">Mostrar Usuarios</router-link>
       </nav>
     </div>
-    <main class="mt-6">
+    <main class="sm:mt-6 mt-1">
       <RouterView />
     </main>
-    <footer class="bg-slate-50 m-3">
+    <footer class="bg-slate-50 mt-auto">
       <div class="dev-info flex font-light bottom-0 flex-wrap">
           <p class="w-full font-semibold">Dev info:</p>
           <p>Current route path: <span class="font-semibold pr-6">{{ $route.fullPath }} </span></p>
