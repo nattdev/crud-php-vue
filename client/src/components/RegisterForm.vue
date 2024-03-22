@@ -4,6 +4,8 @@ import { useRoute } from 'vue-router';
 
 const { getUsers } = inject('users');
 
+const HOST = import.meta.env.VITE_BACKEND_URL || "http://localhost";
+
 const name = ref("");
 const age = ref();
 const email = ref("");
@@ -12,7 +14,7 @@ const route = useRoute();
 
 async function createUser() {
 
-    const URL = "http://localhost/crud-php-vue/api/create.php";
+    const URL = `${HOST}/crud-php-vue/api/create.php`;
     const data = {
         nombre: name.value,
         edad: age.value,
@@ -30,7 +32,7 @@ async function createUser() {
 }
 
 async function updateUser() {
-    const URL = "http://localhost/crud-php-vue/api/update.php";
+    const URL = `${HOST}/crud-php-vue/api/update.php`;
     const data = {
         id: parseInt(route.params.id),
         nombre: name.value,
@@ -55,7 +57,7 @@ function submitForm() {
 }
 
 async function loadUser() {
-    const URL = `http://localhost/crud-php-vue/api/read.php/${route.params.id}`;
+    const URL = `${HOST}/crud-php-vue/api/read.php/${route.params.id}`;
     const response = await fetch(URL);
     const data = await response.json();
 

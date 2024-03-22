@@ -2,13 +2,15 @@
 import { ref, provide } from 'vue';
 import { useRoute, RouterView } from 'vue-router';
 
+const HOST = import.meta.env.VITE_BACKEND_URL || "http://localhost";
+
 const route = useRoute();
 
 const users = ref([]);
 provide('users', { users, getUsers });
 
 async function getUsers() {
-  const URL = "http://localhost/crud-php-vue/api/read.php";
+  const URL = `${HOST}/crud-php-vue/api/read.php`;
   const response = await fetch(URL);
   const data = await response.json();
   users.value = data;

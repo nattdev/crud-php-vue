@@ -5,11 +5,13 @@ import { ref, inject } from 'vue';
 // const users = ref([]);
 const { users } = inject('users');
 
+const HOST = import.meta.env.VITE_BACKEND_URL || "http://localhost";
+
 async function deleteUser(id) {
     console.log("eliminar", id);
     const newUsers = users.value.filter(user => id !== user.id);
     users.value = newUsers;
-    const URL = "http://localhost/crud-php-vue/api/delete.php";
+    const URL = `${HOST}/crud-php-vue/api/delete.php`;
     const data = {
         id: parseInt(id),
     }
