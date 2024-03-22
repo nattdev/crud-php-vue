@@ -1,4 +1,9 @@
 <?php
+// Establecer los encabezados CORS
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: PUT, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
+
 include('../config/config.php');
 
 $conn = mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
@@ -10,8 +15,9 @@ if ($_SERVER["REQUEST_METHOD"] == "PUT") {
 
     $id = $post_data['id'];
     $nombre = $post_data['nombre'];
+    $email = $post_data['email'];
 
-    $query = "UPDATE usuarios SET nombre = '$nombre' WHERE id = $id ";
+    $query = "UPDATE usuarios SET nombre = '$nombre', email = '$email' WHERE id = $id ";
 
     $result = mysqli_query($conn, $query);
 

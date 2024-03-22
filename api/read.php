@@ -1,4 +1,9 @@
 <?php
+// Establecer los encabezados CORS
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
+
 include("../config/config.php");
 
 $conn = mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
@@ -18,7 +23,7 @@ if ($uriSize >= 5) {
 if ($id) {
     $query = "SELECT * FROM usuarios where id = $id";
 } else {
-    $query = "SELECT * FROM usuarios";
+    $query = "SELECT * FROM usuarios ORDER BY fecha_registro DESC";
 }
 
 $result = mysqli_query($conn, $query);

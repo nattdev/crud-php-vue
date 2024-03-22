@@ -1,7 +1,12 @@
 <?php
- include("../config/config.php");
+// Establecer los encabezados CORS
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
 
- $conn = mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
+include("../config/config.php");
+
+$conn = mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
 
 if ($_SERVER["REQUEST_METHOD"] == 'POST') {
 
@@ -18,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
     $query = "INSERT INTO usuarios (nombre, email, edad) VALUES ('$nombre', '$email', '$edad')";
     $result = mysqli_query($conn, $query);
 
-    if($result) {
+    if ($result) {
         echo json_encode(array("message" => "Usuario creado con exito"));
     } else {
         echo json_encode(array("error" => "Error al crear usuario"));
@@ -28,5 +33,3 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
 }
 
 mysqli_close($conn);
-
-?>
