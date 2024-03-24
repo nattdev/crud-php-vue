@@ -57,7 +57,7 @@ function submitForm() {
 }
 
 async function loadUser() {
-    const URL = `${HOST}/crud-php-vue/api/read.php/${route.params.id}`;
+    const URL = `${HOST}/crud-php-vue/api/read.php?id=${route.params.id}`;
     const response = await fetch(URL);
     const data = await response.json();
 
