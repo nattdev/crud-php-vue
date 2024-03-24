@@ -4,9 +4,16 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 
-include("../config/config.php");
+$host = $_ENV['PG_HOST'];
+$port = $_ENV['PG_PORT'];
+$db = $_ENV['PG_DB'];
+$user = $_ENV['PG_USER'];
+$password = $_ENV['PG_PASSWORD'];
+$endpoint = $_ENV['PG_ENDPOINT'];
 
-$conn = mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
+$connection_string = "host=" . $host . " port=" . $port . " dbname=" . $db . " user=" . $user . " password=" . $password . " options='endpoint=" . $endpoint . "' sslmode=require";
+
+$conn = pg_connect($connection_string);
 
 if ($_SERVER["REQUEST_METHOD"] == 'DELETE') {
     $json_data = file_get_contents('php://input');
@@ -15,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'DELETE') {
     $id = $post_data['id'];
     $query = "DELETE FROM usuarios WHERE id = $id";
 
-    $result = mysqli_query($conn, $query);
+    $result = pg_query($conn, $query);
 
     // if ($result) {
     //     echo json_encode(array("message"=> "El usuario ha sido borrado con éxito", "result" => $result));
@@ -24,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'DELETE') {
     // }
     
     if ($result) {
-        $rows_affected = mysqli_affected_rows($conn);
+        $rows_affected = pg_affected_rows($result);
 
         if ($rows_affected > 0) {
             echo json_encode(array('message' => 'Usuario eliminado con éxito.'));
@@ -37,4 +44,4 @@ if ($_SERVER["REQUEST_METHOD"] == 'DELETE') {
     echo json_encode(array("error" => "Metodo no permitido."));
 }
 
-mysqli_close($conn);
+pg_close($conn);

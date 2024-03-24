@@ -4,9 +4,16 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 
-include("../config/config.php");
+$host = $_ENV['PG_HOST'];
+$port = $_ENV['PG_PORT'];
+$db = $_ENV['PG_DB'];
+$user = $_ENV['PG_USER'];
+$password = $_ENV['PG_PASSWORD'];
+$endpoint = $_ENV['PG_ENDPOINT'];
 
-$conn = mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
+$connection_string = "host=" . $host . " port=" . $port . " dbname=" . $db . " user=" . $user . " password=" . $password . " options='endpoint=" . $endpoint . "' sslmode=require";
+
+$conn = pg_connect($connection_string);
 
 if ($_SERVER["REQUEST_METHOD"] == 'POST') {
 
@@ -21,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
     // $email = $_POST["email"];
 
     $query = "INSERT INTO usuarios (nombre, email, edad) VALUES ('$nombre', '$email', '$edad')";
-    $result = mysqli_query($conn, $query);
+    $result = pg_query($conn, $query) or die('Query failed: ' . pg_last_error());
 
     if ($result) {
         echo json_encode(array("message" => "Usuario creado con exito"));
@@ -32,4 +39,4 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
     echo json_encode(array("error" => "Metodo no permitido."));
 }
 
-mysqli_close($conn);
+pg_close($conn);
