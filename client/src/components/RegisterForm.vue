@@ -85,14 +85,14 @@ if (route.params.id) {
 </script>
 <template>
     <div class="bg-[#FBFCFF] rounded-xl flex items-center flex-col sm:px-12 py-6 md:flex-row">
-        <form class="flex flex-col pr-9 py-6 text-lg flex-grow gap-2 w-full md:w-fit" @submit.prevent="submitForm">
+        <form class="flex flex-col pr-9 py-6 text-lg flex-grow gap-2 w-full md:w-fit leading-tight" @submit.prevent="submitForm">
             <label class="font-semibold p-1" for="GET-name">Nombre</label>
             <input class="p-1 border-b-slate-200 border-b-2" id="GET-name" v-model="name" type="text" name="name" required />
             <label class="font-semibold p-1" for="GET-age" v-if="!$route.params.id">Edad</label>
             <input class="p-1 border-b-slate-200 border-b-2" id="GET-age" v-model="age" type="number" name="age" v-if="!$route.params.id" />
             <label class="font-semibold p-1" for="GET-email">Email</label>
             <input class="p-1 border-b-slate-200 border-b-2" id="GET-email" v-model="email" type="email" name="email" required />
-            <input class="py-1 px-6 mt-3 border-2 rounded-3xl w-fit cursor-pointer border-slate-600 text-slate-600 font-semibold text-base" type="submit" value="GUARDAR" />
+            <input class="py-1 px-6 mt-3 border-2 rounded-3xl w-fit cursor-pointer border-slate-600 text-slate-600 font-semibold text-base hover:bg-slate-600 hover:text-white transition-colors" type="submit" value="GUARDAR" />
         </form>
         <div id="preview-card-user" class="flex overflow-hidden flex-col justify-center h-fit p-6 items-center gap-2 bg-white shadow-md rounded-xl md:w-2/5 w-full break-words text-center mb-4 sm:mb-0">
             <p class="font-semibold mb-2">Nuevo Usuario</p>
