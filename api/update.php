@@ -4,6 +4,8 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: PUT, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 
+include("../config/config.php");
+
 $host = $_ENV['PG_HOST'];
 $port = $_ENV['PG_PORT'];
 $db = $_ENV['PG_DB'];
@@ -11,7 +13,11 @@ $user = $_ENV['PG_USER'];
 $password = $_ENV['PG_PASSWORD'];
 $endpoint = $_ENV['PG_ENDPOINT'];
 
-$connection_string = "host=" . $host . " port=" . $port . " dbname=" . $db . " user=" . $user . " password=" . $password . " options='endpoint=" . $endpoint . "' sslmode=require";
+$connection_string = "host=" . $host . " port=" . $port . " dbname=" . $db . " user=" . $user . " password=" . $password;
+
+// Puedes habilitar la opción endpoint y sslmode requeridos descomentando la siguiente línea si es necesario:
+
+// $connection_string .= " options='endpoint=" . $endpoint . "' sslmode=require";
 
 $conn = pg_connect($connection_string);
 
