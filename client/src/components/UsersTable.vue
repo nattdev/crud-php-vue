@@ -43,7 +43,7 @@ function navigateToUpdateUser(id) {
 <template>
     <Search/>
     <div class="w-full">
-        <div class="text-left text-lg hidden sm:grid sm:grid-cols-[1fr_2fr_1fr_2fr_2fr] border-y border-slate-300 font-light my-2">
+        <div class="text-left text-lg hidden lg:grid lg:grid-cols-[1fr_2fr_1fr_2fr_2fr] border-y border-slate-300 font-light my-2">
             <p>ID</p>
             <p>Nombre</p>
             <p>Edad</p>
