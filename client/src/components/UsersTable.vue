@@ -1,14 +1,21 @@
 <script setup>
 import router from '@/router';
-import { ref, inject } from 'vue';
+import { inject } from 'vue';
+import Search from './Search.vue';
 
-// const users = ref([]);
-const { users } = inject('users');
-
+const users = inject('users');
 const HOST = import.meta.env.VITE_BACKEND_URL || "http://localhost";
 
+getUsers();
+
+async function getUsers() {
+  const URL = `${HOST}/crud-php-vue/api/read.php`;
+  const response = await fetch(URL);
+  const data = await response.json();
+  users.value = data;
+}
+
 async function deleteUser(id) {
-    console.log("eliminar", id);
     const newUsers = users.value.filter(user => id !== user.id);
     users.value = newUsers;
     const URL = `${HOST}/crud-php-vue/api/delete.php`;
@@ -32,8 +39,9 @@ function navigateToUpdateUser(id) {
 </script>
 
 <template>
+    <Search/>
     <div class="w-full">
-        <div class="text-left text-lg hidden sm:grid sm:grid-cols-[1fr_2fr_1fr_2fr_2fr] border-y border-slate-300 font-light my-2">
+        <div class="text-left text-lg hidden lg:grid lg:grid-cols-[1fr_2fr_1fr_2fr_2fr] border-y border-slate-300 font-light my-2">
             <p>ID</p>
             <p>Nombre</p>
             <p>Edad</p>
