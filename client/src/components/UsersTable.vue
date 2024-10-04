@@ -13,11 +13,9 @@ async function getUsers() {
   const response = await fetch(URL);
   const data = await response.json();
   users.value = data;
-  console.log(users.value)
 }
 
 async function deleteUser(id) {
-    console.log("eliminar", id);
     const newUsers = users.value.filter(user => id !== user.id);
     users.value = newUsers;
     const URL = `${HOST}/crud-php-vue/api/delete.php`;
