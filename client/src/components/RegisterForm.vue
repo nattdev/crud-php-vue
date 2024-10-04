@@ -11,6 +11,7 @@ const email = ref("");
 const route = useRoute();
 
 const loading = ref(false);
+const updateLoading = ref(false);
 const successMessage = ref("");
 const showSuccessMessage = ref(false);
 
@@ -51,7 +52,6 @@ async function submitForm() {
         loading.value = true;
         if (route.params.id) {
             const response = await updateUser();
-            console.log(response.status);
             response.status == 200 ? successMessage.value = "El usuario fue actualizado exitosamente" : "";
         } else {
             const response = await createUser();
@@ -74,13 +74,19 @@ async function submitForm() {
 }
 
 async function loadUser() {
-    const URL = `${HOST}/crud-php-vue/api/read.php?id=${route.params.id}`;
-    const response = await fetch(URL);
-    const data = await response.json();
-
-    name.value = data[0].nombre;
-    age.value = data[0].edad;
-    email.value = data[0].email;
+    try {
+        updateLoading.value = true;
+        const URL = `${HOST}/crud-php-vue/api/read.php?id=${route.params.id}`;
+        const response = await fetch(URL);
+        const data = await response.json();
+        name.value = data[0].nombre;
+        age.value = data[0].edad;
+        email.value = data[0].email;
+    } catch (error) {
+        console.error('Error al obtener usuario', error);
+    } finally {
+        updateLoading.value = false;
+    }
 }
 
 function clearFields() {
@@ -105,19 +111,22 @@ if (route.params.id) {
         <form class="flex flex-col pr-9 pb-6 px-3 text-lg flex-grow gap-2 w-full md:w-fit leading-none"
             @submit.prevent="submitForm">
             <label class="font-semibold p-1" for="GET-name">Nombre</label>
-            <input class="p-1 border-b-slate-200 border-b-2" id="GET-name" v-model="name" type="text" name="name"
-                required />
+            <input class="p-1 border-b-slate-200 border-b-2 disabled:opacity-30" id="GET-name" v-model="name"
+                type="text" name="name" required :disabled="updateLoading || loading"
+                :placeholder="updateLoading ? '...cargando' : ''" />
             <label class="font-semibold p-1" for="GET-age" v-if="!$route.params.id">Edad</label>
-            <input class="p-1 border-b-slate-200 border-b-2" id="GET-age" v-model="age" type="number" name="age"
-                v-if="!$route.params.id" />
+            <input class="p-1 border-b-slate-200 border-b-2 disabled:opacity-30" id="GET-age" v-model="age"
+                type="number" name="age" v-if="!$route.params.id" :disabled="loading"
+                :placeholder="updateLoading ? '...cargando' : ''" />
             <label class="font-semibold p-1" for="GET-email">Email</label>
-            <input class="p-1 border-b-slate-200 border-b-2" id="GET-email" v-model="email" type="email" name="email"
-                required />
+            <input class="p-1 border-b-slate-200 border-b-2 disabled:opacity-30" id="GET-email" v-model="email"
+                type="email" name="email" :placeholder="updateLoading ? '...cargando' : ''" required
+                :disabled="updateLoading || loading" />
             <input
                 class="py-1 px-6 mt-3 border-2 rounded-3xl w-fit cursor-pointer border-slate-600 text-slate-600 font-semibold text-base hover:bg-slate-600 hover:text-white transition-colors disabled:bg-slate-200 disabled:border-slate-200 disabled:text-slate-300 disabled:hover:bg-none disabled:hover:text-slate-300"
                 type="submit" value="GUARDAR" :disabled="loading" /><span v-show="showSuccessMessage"
                 :class="{ 'text-green-700 font-medium': successMessage && successMessage.includes('creado'), 'text-amber-700 font-medium': successMessage && successMessage.includes('actualizado') }">{{
-                successMessage }}</span>
+                    successMessage }}</span>
         </form>
         <div id="preview-card-user"
             class="flex overflow-hidden flex-col justify-center h-fit p-6 items-center gap-2 bg-white shadow-md rounded-xl md:w-2/5 w-full break-words text-center mb-4 sm:mb-0">

@@ -1,18 +1,27 @@
 <script setup>
 import router from '@/router';
-import { inject } from 'vue';
+import { inject, ref } from 'vue';
 import Search from './Search.vue';
 
 const users = inject('users');
 const HOST = import.meta.env.VITE_BACKEND_URL || "http://localhost";
+const loading = ref(false);
 
 getUsers();
 
 async function getUsers() {
-  const URL = `${HOST}/crud-php-vue/api/read.php`;
-  const response = await fetch(URL);
-  const data = await response.json();
-  users.value = data;
+    try {
+        loading.value = true;
+        const URL = `${HOST}/crud-php-vue/api/read.php`;
+        const response = await fetch(URL);
+        const data = await response.json();
+        users.value = data;
+    } catch (error) {
+        console.error('Error al obtener usuarios', error);
+    } finally {
+        loading.value = false;
+    }
+
 }
 
 async function deleteUser(id) {
@@ -39,16 +48,20 @@ function navigateToUpdateUser(id) {
 </script>
 
 <template>
-    <Search/>
-    <div class="w-full">
-        <div class="text-left text-lg hidden lg:grid lg:grid-cols-[1fr_2fr_1fr_2fr_2fr] border-y border-slate-300 font-light my-2">
+    <Search />
+    <div class="w-full relative">
+        <div v-show="loading" class="left-0 top-0 w-full h-full absolute bg-slate-50 opacity-90 z-30 flex justify-center">
+            <span class="mt-3 font-medium">Cargando...</span></div>
+        <div
+            class="text-left text-lg hidden lg:grid lg:grid-cols-[1fr_2fr_1fr_2fr_2fr] border-y border-slate-300 font-light my-2">
             <p>ID</p>
             <p>Nombre</p>
             <p>Edad</p>
             <p>Email</p>
             <p>Acciones</p>
         </div>
-        <div class=" bg-[#FBFCFF] flex flex-col sm:p-0 sm:py-2 p-3 my-2 rounded-xl lg:grid md:grid-cols-[1fr_2fr_1fr_2fr_2fr] gap-y-2  relative break-words" v-for="user in users">
+        <div class=" bg-[#FBFCFF] flex flex-col sm:p-0 sm:py-2 p-3 my-2 rounded-xl lg:grid md:grid-cols-[1fr_2fr_1fr_2fr_2fr] gap-y-2  relative break-words"
+            v-for="user in users">
             <p class="absolute right-0 pr-3 lg:relative lg:pr-0">{{ user.id }}</p>
             <p class=" font-semibold sm:text-lg text-xl">{{ user.nombre }}</p>
             <p class="">{{ user.edad }} años</p>
