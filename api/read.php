@@ -36,7 +36,7 @@ if ($uriSize >= 5) {
 if ($id) {
     $query = "SELECT * FROM usuarios where id = $id";
 } else {
-    $query = "SELECT * FROM usuarios ORDER BY fecha_registro DESC";
+    $query = "SELECT * FROM usuarios ORDER BY id ASC";
 }
 
 $result = pg_query($conn, $query);
