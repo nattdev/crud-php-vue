@@ -12,23 +12,23 @@ const email = ref("");
 
 const route = useRoute();
 
-async function createUser() {
+const loading = ref(false);
+const successMessage = ref("");
 
+async function createUser() {
     const URL = `${HOST}/crud-php-vue/api/create.php`;
     const data = {
         nombre: name.value,
         edad: age.value,
         email: email.value
     }
-    const response = await fetch(URL, {
+    return await fetch(URL, {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
             "Content-Type": "application/json",
         },
     })
-    clearFields();
-    getUsers();
 }
 
 async function updateUser() {
@@ -38,21 +38,38 @@ async function updateUser() {
         nombre: name.value,
         email: email.value
     }
-    const response = await fetch(URL, {
+    return await fetch(URL, {
         method: "PUT",
         body: JSON.stringify(data),
         headers: {
             "Content-Type": "application/json",
         },
     })
-    getUsers();
 }
 
-function submitForm() {
-    if (route.params.id) {
-        updateUser();
-    } else {
-        createUser();
+async function submitForm() {
+    try {
+        loading.value = true;
+        if (route.params.id) {
+            const response = await updateUser();
+            console.log(response.status);
+            response.status == 200 ? successMessage.value = "El usuario fue actualizado exitosamente" : "";
+        } else {
+            const response = await createUser();
+            response.status == 201 ? successMessage.value = "El usuario fue creado exitosamente" : "";
+        }
+        
+    } catch (error) {
+        console.error('Error al crear/actualizar el usuario:', error);
+        successMessage.value = 'Error al guardar el usuario';
+    } finally {
+        loading.value = false;
+            if(route.params.id) {
+                getUsers();
+            } else {
+                clearFields();
+                getUsers();
+            }
     }
 }
 
@@ -92,7 +109,7 @@ if (route.params.id) {
             <input class="p-1 border-b-slate-200 border-b-2" id="GET-age" v-model="age" type="number" name="age" v-if="!$route.params.id" />
             <label class="font-semibold p-1" for="GET-email">Email</label>
             <input class="p-1 border-b-slate-200 border-b-2" id="GET-email" v-model="email" type="email" name="email" required />
-            <input class="py-1 px-6 mt-3 border-2 rounded-3xl w-fit cursor-pointer border-slate-600 text-slate-600 font-semibold text-base hover:bg-slate-600 hover:text-white transition-colors" type="submit" value="GUARDAR" />
+            <input class="py-1 px-6 mt-3 border-2 rounded-3xl w-fit cursor-pointer border-slate-600 text-slate-600 font-semibold text-base hover:bg-slate-600 hover:text-white transition-colors disabled:bg-slate-200 disabled:border-slate-200 disabled:text-slate-300 disabled:hover:bg-none disabled:hover:text-slate-300"  type="submit" value="GUARDAR" :disabled="loading"/><span>{{ successMessage }}</span>
         </form>
         <div id="preview-card-user" class="flex overflow-hidden flex-col justify-center h-fit p-6 items-center gap-2 bg-white shadow-md rounded-xl md:w-2/5 w-full break-words text-center mb-4 sm:mb-0">
             <p class="font-semibold mb-2">Nuevo Usuario</p>
