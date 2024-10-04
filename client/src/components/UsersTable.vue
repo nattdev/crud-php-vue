@@ -1,6 +1,7 @@
 <script setup>
 import router from '@/router';
 import { inject } from 'vue';
+import Search from './Search.vue';
 
 const users = inject('users');
 const HOST = import.meta.env.VITE_BACKEND_URL || "http://localhost";
@@ -40,6 +41,7 @@ function navigateToUpdateUser(id) {
 </script>
 
 <template>
+    <Search/>
     <div class="w-full">
         <div class="text-left text-lg hidden sm:grid sm:grid-cols-[1fr_2fr_1fr_2fr_2fr] border-y border-slate-300 font-light my-2">
             <p>ID</p>
