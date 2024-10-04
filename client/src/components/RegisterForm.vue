@@ -2,8 +2,6 @@
 import { inject, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
-const { getUsers } = inject('users');
-
 const HOST = import.meta.env.VITE_BACKEND_URL || "http://localhost";
 
 const name = ref("");
@@ -69,11 +67,8 @@ async function submitForm() {
         setTimeout(() => {
             showSuccessMessage.value = false;
         }, 2500);
-        if (route.params.id) {
-            getUsers();
-        } else {
+        if (!route.params.id) {
             clearFields();
-            getUsers();
         }
     }
 }
