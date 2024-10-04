@@ -7,16 +7,7 @@ const HOST = import.meta.env.VITE_BACKEND_URL || "http://localhost";
 const route = useRoute();
 
 const users = ref([]);
-provide('users', { users, getUsers });
-
-async function getUsers() {
-  const URL = `${HOST}/crud-php-vue/api/read.php`;
-  const response = await fetch(URL);
-  const data = await response.json();
-  users.value = data;
-}
-
-getUsers();
+provide('users', users);
 
 function pathName() {
   if(route.fullPath == '/') {

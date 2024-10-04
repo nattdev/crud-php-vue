@@ -1,11 +1,19 @@
 <script setup>
 import router from '@/router';
-import { ref, inject } from 'vue';
+import { inject } from 'vue';
 
-// const users = ref([]);
-const { users } = inject('users');
-
+const users = inject('users');
 const HOST = import.meta.env.VITE_BACKEND_URL || "http://localhost";
+
+getUsers();
+
+async function getUsers() {
+  const URL = `${HOST}/crud-php-vue/api/read.php`;
+  const response = await fetch(URL);
+  const data = await response.json();
+  users.value = data;
+  console.log(users.value)
+}
 
 async function deleteUser(id) {
     console.log("eliminar", id);
