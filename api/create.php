@@ -21,6 +21,10 @@ $connection_string = "host=" . $host . " port=" . $port . " dbname=" . $db . " u
 
 $conn = pg_connect($connection_string);
 
+if (!$conn) {
+    die(json_encode(array("message" => "Error al conectar a la base de datos: " . pg_last_error())));
+}
+
 if ($_SERVER["REQUEST_METHOD"] == 'POST') {
 
     $json_data = file_get_contents('php://input');
@@ -37,8 +41,10 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
     $result = pg_query($conn, $query) or die('Query failed: ' . pg_last_error());
 
     if ($result) {
+        http_response_code(201); // Creado correctamente
         echo json_encode(array("message" => "Usuario creado con exito"));
     } else {
+        http_response_code(500); // Error interno del servidor
         echo json_encode(array("error" => "Error al crear usuario"));
     }
 } else {
